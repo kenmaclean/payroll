@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import permission_required
 from django.http import HttpResponse
 
 from .models import Archive_file
+from .controller import doSomething
 
 
 def index(request):
@@ -18,6 +19,8 @@ def index(request):
 
 def detail(request, file_id):
     response = f'The file id = {file_id}'
+    response += doSomething(file_id)
+
     return HttpResponse(response)
 
 def results(request, file_id):
@@ -27,6 +30,10 @@ def results(request, file_id):
 def employee(request, employee_id):
     response = f'The employee id = {employee_id}'
     return HttpResponse(response)
+
+# need a view to get pay period
+
+
 
 
 @permission_required('admin.can_add_log_entry')

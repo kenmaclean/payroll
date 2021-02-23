@@ -1,12 +1,6 @@
 from django.db import models
-"""
-Model
-input file
--id
-This model will hold an archive of the data files that have been uploaded
-We could have 2 models here. file data with a FK to file contents
 
-"""
+
 class Archive_file(models.Model):
   file_name = models.CharField(max_length=100, null=False, blank=False) # is max lenght required? To short? 
   file_id = models.IntegerField(null=False, blank=False)

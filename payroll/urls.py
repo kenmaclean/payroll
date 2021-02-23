@@ -16,14 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 #from payroll.pay import urls
-from payroll.apps.contacts.views import contact, contact_upload
+#from payroll.apps.contacts.views import contact, contact_upload
 from payroll.apps.pay.views import pay_upload
 
 urlpatterns = [
     path('pay/', include('payroll.apps.pay.urls')),
-    path('contacts/', include('payroll.apps.contacts.urls')),
-    path('contact', contact, name="contact"),
+    #path('contacts/', include('payroll.apps.contacts.urls')),
+    #path('contact', contact, name="contact"),
     path('admin/', admin.site.urls),
-    path('upload-csv/', contact_upload, name="contact_upload"),
+    #path('upload-csv/', contact_upload, name="contact_upload"),
     path('upload-pay-csv/', pay_upload, name="pay_upload"),
 ]
