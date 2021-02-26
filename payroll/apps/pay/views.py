@@ -1,5 +1,6 @@
 import io
 import csv
+import json
 import datetime
 
 from datetime import date
@@ -9,7 +10,7 @@ from django.contrib.auth.decorators import permission_required
 from django.http import HttpResponse
 
 from .models import Archive_file
-from .controller import doSomething
+from .controller import generateReportJSON
 
 
 def index(request):
@@ -18,23 +19,19 @@ def index(request):
     return HttpResponse(response)
 
 def detail(request, file_id):
-    response = f'The file id = {file_id}'
-    response += doSomething(file_id)
-
-    return HttpResponse(response)
+    response = generateReportJSON(file_id)
+    
+    return HttpResponse(response, content_type="application/json")
+    
 
 def results(request, file_id):
     response = f'The file resultsd id = {file_id}'
     return HttpResponse(response)
 
+
 def employee(request, employee_id):
     response = f'The employee id = {employee_id}'
     return HttpResponse(response)
-
-# need a view to get pay period
-
-
-
 
 @permission_required('admin.can_add_log_entry')
 def pay_upload(request):
@@ -52,10 +49,8 @@ def pay_upload(request):
     csv_file_name = csv_file.name
     print(f'file name = {csv_file_name}')
     fn = csv_file_name.split('-')
-    print(f'file name split = {csv_file_name}')
     fn2 = fn[2].split('.')
     file_id = fn2[0]
-    print(f'file number = {file_id}')
 
     # once you have the file name as string extract the file id from it, file name should be this format 
     # time-report-42.csv.... we want 42.
@@ -83,6 +78,6 @@ def pay_upload(request):
             employee_id = column[2],
             job_group = column[3]
         )
-    context = {} # get rid of this later
+    #context = {} # get rid of this later
     
-    return render(request, template, context)
+    return render(request, template)#, context)

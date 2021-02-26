@@ -25,5 +25,5 @@ urlpatterns = [
     #path('contact', contact, name="contact"),
     path('admin/', admin.site.urls),
     #path('upload-csv/', contact_upload, name="contact_upload"),
-    path('upload-pay-csv/', pay_upload, name="pay_upload"),
+    path('uploadfile/', pay_upload, name="uploadfile"),
 ]
