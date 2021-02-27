@@ -1,15 +1,30 @@
-{% if messages %}
-    {% for message in messages %}
-        <div>
-            <strong>{{ message|safe }}</strong>
-        </div>
-    {% endfor %}
-{% else %}
-{{order}}
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <label>Upload a pay file</label>
-    <input type="file" name="file">
-    <p>Only accepts *.csv Files</p>
-    <button type="submit">Upload File</button>
-{% endif %}
+<!DOCTYPE html>
+<html>
+<html lang="en">  
+<head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Upload Payroll File</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        {% if messages %}
+            {% for message in messages %}
+                <div>
+                    <strong>{{ message|safe }}</strong>
+                </div>
+            {% endfor %}
+        {% else %}
+        {{order}}
+        <p><form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label>Upload a pay file</label>
+            <input type="file" name="file">
+            <p>Only accepts *.csv Files</p>
+            <button type="submit">Upload File</button>
+        {% endif %}
+        </p>
+    </body>
+</html>

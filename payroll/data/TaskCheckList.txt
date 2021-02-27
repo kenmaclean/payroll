@@ -1,0 +1,134 @@
+Below is from the specifications broken into a task list
+
+Notes:
+1. I did not use TDD. I Built small parts and tested as I went.
+2. Unit tests were written after I had the basics written
+
+From Specifications:
+[x] 1. An endpoint for uploading a file.
+
+[x] This file will conform to the CSV specifications outlined in the previous section.
+    NOTE: the sample data in https://github.com/wvchallenges/se-challenge-payroll
+    has a different date format then the example file.
+    [x] Using the example file data as source of truth
+    [FUTURE] support both date formats
+
+[x] Upon upload, the timekeeping information within the file must be stored to a database for archival purposes.
+    [x] accessible to vieww via admin
+[x] If an attempt is made to upload a file with the same report ID as a previously uploaded file, this upload should fail with an error message indicating that this is not allowed.
+    [x] Handled a few test cases crudely. There is room for improvement
+
+[x] 2. An endpoint for retrieving a payroll report structured in the following way:
+
+[x] NOTE: It is not the responsibility of the API to return HTML, as we will delegate the visual layout and redering to the front end. The expectation is that this API will only return JSON data.
+
+[x] Return a JSON object payrollReport.
+[x] payrollReport will have a single field, employeeReports, containing a list of objects with fields employeeId, payPeriod, and amountPaid.
+    [x] matched example response as good as possible,
+    [x] took some liberties as example was not valid json
+        [x] e.g. keys/properties should be in double quotes and there should not be a ";" after the list
+[x] The payPeriod field is an object containing a date interval that is roughly biweekly. Each month has two pay periods; the first half is from the 1st to the 15th inclusive, and the second half is from the 16th to the end of the month, inclusive. payPeriod will have two fields to represent this interval: startDate and endDate.
+    [x] I matched the format and padding of the example response as best as possible.
+    [x] e.g. in file we have this format "04/01/2020" or "9/11/2016", in example response it requests  "2020-01-01" so I conformed
+[x] Each employee should have a single object in employeeReports for each pay period that they have recorded hours worked. The amountPaid field should contain the sum of the hours worked in that pay period multiplied by the hourly rate for their job group.
+    [x] consolidated correctly
+[x] If an employee was not paid in a specific pay period, there should not be an object in employeeReports for that employee + pay period combination.
+[x] The report should be sorted in some sensical order (e.g. sorted by employee id and then pay period start.)
+    [x] sorted by employee id the payperiod start date
+[x] The report should be based on all of the data across all of the uploaded time reports, for all time.
+    [x] I built to process a specific file id (for selfish testing reasons)
+        http://127.0.0.1:8000/pay/1
+    [x] will add an "all parameter"
+        http://127.0.0.1:8000/pay/
+
+
+[Arguable] Is easy to set up
+    [x] postgresql can be tricky
+    [x] virtual env is always tricky
+***** [TODO] Can run on either a Linux or Mac OS X developer machine
+        [TODO] test this on Linux machine 
+        [TODO] TEST with GIT BUNDLE
+[x] Does not require any non open-source software
+
+Documentation:
+[TODO] Please commit the following to this README.md:
+
+[TODO] Instructions on how to build/run your application
+Answers to the following questions:
+[TODO] How did you test that your implementation was correct?
+[TODO] If this application was destined for a production environment, what would you add or change?
+    [] Security needs to be 100% this is dealing with pay
+    [] User account security required and probably encryption
+        [] I don't actually know how to do this properly (I could learn!)
+[TODO] What compromises did you have to make as a result of the time constraints of this challenge?
+
+Submission Instructions
+[x] Clone the repository.
+[IN PROGRESS] Complete your project as described above within your local repository.
+[TODO] Ensure everything you want to commit is committed.
+[TODO] Create a git bundle: git bundle create your_name.bundle --all
+    [] this is new to me but good way to test is use bundle on linux computer
+[TODO] Email the bundle file to dev.careers@waveapps.com and CC the recruiter you have been in contact with.
+    [] email to yourself and proceed with Linux test
+
+
+Evaluation of your submission will be based on the following criteria.
+
+Did you follow the instructions for submission?
+Did you complete the steps outlined in the Documentation section?
+Were models/entities and other components easily identifiable to the reviewer?
+What design decisions did you make when designing your models/entities? Are they explained?
+Did you separate any concerns in your application? Why or why not?
+Does your solution use appropriate data types for the problem as described?
+
+
+
+
+
+************ Ken's todo list (work in progress)
+[] Make sure you remove user name and password from DB for
+[x] add a unit test to show concept
+    [x] to run "python manage.py test payroll.apps.pay"
+    [TODO] Should have a lot more unit tests, add
+[TODO] clean up the code, condense
+[TODO] comment code better
+[FUTURE] add swagger for admin page. 
+[x] check that response returns valid JSON (using = https://jsonlint.com/)
+[x] Get postgres DB set up on new django app
+[x] clone git repo, make local git project
+[x] Create personal Git repo to store project
+    [x] https://github.com/kenmaclean/payroll
+    [x] init, add, commit, push (make 2 branches main and develop)
+[x] Create models to store file data
+[x] Create some views / end points 
+[x] Set up a basic admin page to test view data
+[x] Build file ingest part of the project
+	[x] small basic html
+	[x] test upload
+[x] Create a controller to read uploaded data from DB to begin file data processing into proper JSON respons
+[x] test the json
+[x] check the date formats in the output make sure you have leading zeros for month and day when value < 10
+[x] Make sure the list of dictionaries is sorted by employee ID and start date
+[x] check that the ordering of the output is correct ()
+[TODO] Handle the alternate date format (file vs readme)
+[TODO] HIDE THE DATABASE PASSORD
+[TODO] Document instructions
+[TODO] Test on linux machine
+[TODO] Test git bundle on linux machine
+[TODO] Use proper HTML for file upload template
+    [] this is week could use a lot of worked
+[TODO] add a splash of CSS to file upload template to make it look less terrible
+[TODO] create a pull request for the project when complete
+[TODO] Self Review the pull request
+[TODO] Correct any review
+[TODO] merge the branch
+[TODO] Submit assignment with all instructions complete (see read me)
+*******************************
+[DO THIS] HIDE THE DATABASE PASSORD
+add instructions to readme for user to create their own postgresql DB with admin user name and password
+*****************************
+[x] pip freeze and pipe into requirement file
+    add this to install instructions
+    also mention upgrade pip
+    using python version 3.9.1
+    
