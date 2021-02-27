@@ -7,7 +7,7 @@ from .models import Archive_file
 # These should be added to config or settings file so you can change them globally quick
 # better as more categories are created this would make a good model
 JOB_GROUP_A_PAY = 20.0 # paid 20$ an hour.
-JOB_GROUP_B_PAY = 30.0 # paid 30$ an hour. 
+JOB_GROUP_B_PAY = 30.0 # paid 30$ an hour.
 
 def generateReportJSON(requested_file_id=-1):
     """
@@ -17,17 +17,17 @@ def generateReportJSON(requested_file_id=-1):
 
     Using -1 to get all records on request
     """
-    employeeReports = [] # This will hold dictionaries with an employee id, pay period and amountpaid
+    # This will hold dictionaries with an employee id, pay period and amountpaid
+    employee_reports = []
 
     if requested_file_id > 0:
         record = Archive_file.objects.filter(file_id=requested_file_id)
     else:
-        # so this is going to get increasingly dangerous as more and more pay periods and employees are created
+        # so this could be dangerous as more and more pay periods and employees are created
         record = Archive_file.objects.all()
-    
-    
+
     for i in range(len(record)):
-        
+
         temp_month = record[i].record_date.month
         temp_day = record[i].record_date.day
         temp_year = record[i].record_date.year
@@ -42,7 +42,7 @@ def generateReportJSON(requested_file_id=-1):
         else:
             start_pay_period = 1
             end_pay_period = 15
-        
+
         # determine amount paid and add it to the pay period for that employee
         # this should be made into a helper function
         if record[i].job_group == 'A':
@@ -66,59 +66,58 @@ def generateReportJSON(requested_file_id=-1):
             str_temp_day_end = '0' + str(end_pay_period)
         else:
             str_temp_day_end = str(end_pay_period)
-        
+
         if start_pay_period < 10:
             str_temp_day_start = '0' + str(start_pay_period)
         else:
             str_temp_day_start = str(start_pay_period)
-            
-        start_Date = str(temp_year) + '-' + str(str_temp_month) + '-' + str(str_temp_day_start)
-        end_Date = str(temp_year) + '-' + str(str_temp_month) + '-' + str(str_temp_day_end)
+
+        start_date = str(temp_year) + '-' + str(str_temp_month) + '-' + str(str_temp_day_start)
+        end_date = str(temp_year) + '-' + str(str_temp_month) + '-' + str(str_temp_day_end)
 
         amount_paid = record[i].hours_worked * rate
-                
+
         payroll_dict_element = {
             "employeeId": record[i].employee_id,
             "payPeriod": {
-                "startDate": start_Date,
-                "endDate": end_Date,
+                "startDate": start_date,
+                "endDate": end_date,
             },
             "amountPaid": amount_paid,
         }
-               
+
         # check to see if a record existing inside the list of dictionaries, if not create one.
-        if not any(payroll_dict_element['employeeId'] == record[i].employee_id 
-                and payroll_dict_element['payPeriod']['startDate'] == start_Date
-                and payroll_dict_element['payPeriod']['endDate'] == end_Date
-                for payroll_dict_element in employeeReports):
+        if not any(payroll_dict_element['employeeId'] == record[i].employee_id
+                and payroll_dict_element['payPeriod']['startDate'] == start_date
+                and payroll_dict_element['payPeriod']['endDate'] == end_date
+                for payroll_dict_element in employee_reports):
 
             # Add the dictionary to the list
-            employeeReports.append(dict(payroll_dict_element))
+            employee_reports.append(dict(payroll_dict_element))
         else:
             # find the index of the dictionary that exists in the list
-            for index, d in enumerate(employeeReports):
-                if d['employeeId'] == record[i].employee_id and d['payPeriod']['startDate'] == start_Date and d['payPeriod']['endDate'] == end_Date:
+            for index, d in enumerate(employee_reports):
+                if d['employeeId'] == record[i].employee_id and d['payPeriod']['startDate'] == start_date and d['payPeriod']['endDate'] == end_date:
                     # once found, update the existing dictionary entries amount paid
-                    employeeReports[index]['amountPaid'] += amount_paid
+                    employee_reports[index]['amountPaid'] += amount_paid
 
     # Build the format required per specifications
-    sorted_list = sorted(employeeReports, key=lambda k: (k['employeeId'], k['payPeriod']['startDate']))
+    # lamda is witchcraft understand why and how this works. (Stole with help of google)
+    sorted_list = sorted(employee_reports, key=lambda k: (k['employeeId'], k['payPeriod']['startDate']))
     result = {"payrollReport": {"employeeReports": sorted_list}}
     result = json.dumps(result, indent=4)
-    
+
     return result
 
 
 def checkIfPreviouslyProcessed(file_id):
-
-    recordProcessed = False
+    """
+    Checks if at least one record for this file id exists in the database, if so return true
+    """
+    record_processed = False
     record = Archive_file.objects.filter(file_id=file_id).first()
 
     if record:
-        recordProcessed = True
+        record_processed = True
 
-    return recordProcessed
-    
-
-
-
+    return record_processed

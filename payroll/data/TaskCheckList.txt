@@ -64,7 +64,7 @@ Answers to the following questions:
 
 Submission Instructions
 [x] Clone the repository.
-[IN PROGRESS] Complete your project as described above within your local repository.
+[x] Complete your project as described above within your local repository.
 [TODO] Ensure everything you want to commit is committed.
 [TODO] Create a git bundle: git bundle create your_name.bundle --all
     [] this is new to me but good way to test is use bundle on linux computer
@@ -131,4 +131,15 @@ add instructions to readme for user to create their own postgresql DB with admin
     add this to install instructions
     also mention upgrade pip
     using python version 3.9.1
-    
+[TODO] clean up pep 8 violations, conform to snake case, 
+[TODO] file level doc strings
+[TODO] class / function level docstrings add or improve
+
+For Documentation
+
+http://127.0.0.1:8000/pay/
+
+http://127.0.0.1:8000/pay/1/
+
+
+http://127.0.0.1:8000/uploadfile/
