@@ -86,7 +86,7 @@ Does your solution use appropriate data types for the problem as described?
 
 
 ************ Ken's todo list (work in progress)
-[] Make sure you remove user name and password from DB for
+[] Make sure you remove user name and password from settings.py file for
 [x] add a unit test to show concept
     [x] to run "python manage.py test payroll.apps.pay"
     [TODO] Should have a lot more unit tests, add
@@ -143,3 +143,19 @@ http://127.0.0.1:8000/pay/1/
 
 
 http://127.0.0.1:8000/uploadfile/
+
+
+
+
+for doc
+
+bundle
+create a postgresql DB called payroll (rename if you wish)
+run migrations
+create a django super user  python manage.py createsuperuser (python3 manage.py createsuperuser)
+in settings.py you need to include your secret key and database password. I will mark locations with <<<password>>> and <<<secretkey>>>
+The secretkey is generated on starting a new project. To be honest I am not sure the correct usage of this. I think you can use a secret key from another django project
+https://docs.djangoproject.com/en/3.1/ref/settings/
+
+
+
