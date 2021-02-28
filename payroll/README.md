@@ -13,6 +13,9 @@ Instructions:
 1. I suggest you create a new virtual env (I like using virtualenvwrapper) I assume you have knowledge (I use Python version 3.9.1)
 2. copy the repo.bundle file to inside your virtual environment directory
 3. run "git clone repo.bundle repo" at terminal
+
+3.5 run pip insatll -r requirements.txt
+
 4. create a postgresql database called payroll
 5. run python manage.py migrate (this will create the DB schema)
 6. create a django super user "python manage.py createsuperuser (python3 manage.py createsuperuser)" with a user name and password
