@@ -43,11 +43,12 @@ From Specifications:
 
 
 [Arguable] Is easy to set up
-    [x] postgresql can be tricky
-    [x] virtual env is always tricky
-***** [TODO] Can run on either a Linux or Mac OS X developer machine
-        [TODO] test this on Linux machine 
-        [TODO] TEST with GIT BUNDLE
+    [x] postgresql can be tricky, you need PGADMIN 4, postgres, secret key, a database called payroll, and a password and django super user.
+    [x] virtual env is always tricky, will omit from instructions
+[x] Can run on either a Linux or Mac OS X developer machine
+        [x] test this on Linux machine 
+        [x] TEST with GIT BUNDLE on linux (emailed the bundle)
+        [x] NOTE I developed this on windows. I'm impartial to OS. 
 [x] Does not require any non open-source software
 
 Documentation:
