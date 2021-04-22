@@ -1,6 +1,5 @@
-# Wave Software Development Challenge
 
-Applicants for the Full-stack Developer role at Wave must
+Applicants for the Full-stack Developer role at must
 complete the following challenge, and submit a solution prior to the onsite
 interview.
 
